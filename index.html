@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>printa ordem</title>
+</head>
+<body>
+<div id="msg"></div>
+
+<script>
+    const msg = document.getElementById('msg');
+    const textList = [
+        'Z-API é um serviço RestFul que provê uma API que permite que você interaja com seu Whatsapp através uma API simples e intuitiva, além de webhooks para te avisar sobre interações com seu número.',
+        'Para começar a usar o Z-API, você precisa criar uma conta em nosso site e adicionar um número de Whatsapp.',
+        'Após adicionar um número, você pode começar a interagir com ele através da nossa API.',
+        'Você pode enviar mensagens, imagens, vídeos, áudios, documentos, contatos, localizações e até mesmo mensagens com opções de resposta.',
+    ];
+
+    (async function() {
+        for (let i of textList.keys()) {
+            const p = document.createElement('p');
+            msg.appendChild(p);
+            await new Promise(resolve => writer(p, textList[i], 0, resolve));
+        }
+    })()
+
+    function writer(messageElement, message, i, callback) {
+        messageElement.scrollIntoView({ behavior: 'smooth'});
+        if (i >= message.length) {
+            callback();
+            return;
+        }
+        setTimeout(() => {
+            messageElement.textContent += message.charAt(i);
+            i++;
+            writer(messageElement, message, i, callback)
+        }, 25);
+    }
+</script>
+</body>
+</html>
